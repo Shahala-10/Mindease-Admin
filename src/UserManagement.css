@@ -1,0 +1,160 @@
+.user-management-page {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.add-user-button-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-user-btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-user-btn:hover {
+  background-color: #218838;
+}
+
+.loading-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #007bff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container p {
+  display: inline;
+  color: #007bff;
+  font-size: 16px;
+}
+
+.error-message {
+  color: #dc3545;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.no-users {
+  text-align: center;
+  color: #555;
+  font-size: 16px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+  color: #333;
+}
+
+.user-row:hover {
+  background-color: #f9f9f9;
+}
+
+.action-btn {
+  padding: 8px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.view-chats {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.view-chats:hover {
+  background-color: #0056b3;
+}
+
+.view-analytics {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+.view-analytics:hover {
+  background-color: #117a8b;
+}
+
+.delete-user {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.delete-user:hover {
+  background-color: #c82333;
+}
+
+.logout-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
+}
