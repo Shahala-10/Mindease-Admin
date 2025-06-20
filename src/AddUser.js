@@ -10,18 +10,39 @@ const AddUser = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewUser({ ...newUser, [name]: value });
+    console.log(`Changing ${name} to: ${value}`); // Debug input change
+    setNewUser((prevState) => {
+      const updatedState = { ...prevState, [name]: value };
+      console.log('Updated newUser state:', updatedState); // Debug updated state
+      return updatedState;
+    });
+  };
+
+  const validateForm = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!newUser.full_name.trim()) return 'Full name is required.';
+    if (!emailRegex.test(newUser.email)) return 'Please enter a valid email address.';
+    if (newUser.password.length < 6) return 'Password must be at least 6 characters long.';
+    return '';
   };
 
   const handleAddUser = async (e) => {
     e.preventDefault();
     setError('');
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.post('http://localhost:5000/admin/users', newUser, {
+      const response = await axios.post('http://localhost:5000/admin/users', newUser, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      navigate('/admin/users'); // Navigate back to user management page
+      if (response.data.status === 'success') {
+        navigate('/admin/users');
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to add user.');
       if (err.response?.status === 401) {
@@ -30,6 +51,8 @@ const AddUser = () => {
       }
     }
   };
+
+  console.log('Rendering AddUser with newUser:', newUser); // Debug render
 
   return (
     <div className="add-user-page">
@@ -45,6 +68,8 @@ const AddUser = () => {
             value={newUser.full_name}
             onChange={handleInputChange}
             required
+            placeholder="" // Ensure no placeholder is set
+            style={{ color: '#000', backgroundColor: '#fff' }} // Ensure visibility
           />
         </div>
         <div className="form-group">
@@ -56,6 +81,8 @@ const AddUser = () => {
             value={newUser.email}
             onChange={handleInputChange}
             required
+            placeholder="" // Ensure no placeholder is set
+            style={{ color: '#000', backgroundColor: '#fff' }} // Ensure visibility
           />
         </div>
         <div className="form-group">
@@ -67,6 +94,8 @@ const AddUser = () => {
             value={newUser.password}
             onChange={handleInputChange}
             required
+            placeholder="" // Ensure no placeholder is set
+            style={{ color: '#000', backgroundColor: '#fff' }} // Ensure visibility
           />
         </div>
         <div className="button-group">

@@ -24,12 +24,15 @@ h2 {
 .form-group {
   display: flex;
   flex-direction: column;
+  position: relative; /* Ensure proper stacking */
 }
 
 .form-group label {
   margin-bottom: 5px;
   font-weight: bold;
   color: #555;
+  position: static; /* Prevent label from overlapping input */
+  z-index: 1; /* Ensure label is above input if needed */
 }
 
 .form-group input {
@@ -38,6 +41,9 @@ h2 {
   border-radius: 4px;
   font-size: 16px;
   transition: border-color 0.3s;
+  color: #000; /* Ensure text is visible */
+  background-color: #fff; /* Ensure background contrasts with text */
+  z-index: 0; /* Keep input below label */
 }
 
 .form-group input:focus {

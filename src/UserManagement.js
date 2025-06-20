@@ -5,8 +5,10 @@ import './UserManagement.css';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
   const fetchUsers = useCallback(async () => {
@@ -17,7 +19,7 @@ const UserManagement = () => {
       const response = await axios.get('http://localhost:5000/admin/users', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUsers(response.data.data.users);
+      setUsers(response.data.data.users || []);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to fetch users.');
       if (err.response?.status === 401) {
@@ -32,6 +34,15 @@ const UserManagement = () => {
   useEffect(() => {
     fetchUsers();
   }, [navigate, fetchUsers]);
+
+  useEffect(() => {
+    // Filter users based on search term
+    const filtered = users.filter((user) =>
+      user.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredUsers(filtered);
+  }, [searchTerm, users]);
 
   const handleDeleteUser = async (userId) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
@@ -54,13 +65,24 @@ const UserManagement = () => {
   return (
     <div className="user-management-page">
       <h2>MindEase User Management</h2>
-      <div className="add-user-button-container">
-        <button
-          onClick={() => navigate('/admin/users/add')}
-          className="add-user-btn"
-        >
-          Add User
-        </button>
+      <div className="controls-container">
+        <div className="add-user-button-container">
+          <button
+            onClick={() => navigate('/admin/users/add')}
+            className="add-user-btn"
+          >
+            Add User
+          </button>
+        </div>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search by name or email..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
       </div>
       {loading && (
         <div className="loading-container">
@@ -69,10 +91,10 @@ const UserManagement = () => {
         </div>
       )}
       {error && <p className="error-message">{error}</p>}
-      {!loading && users.length === 0 && !error && (
+      {!loading && filteredUsers.length === 0 && !error && (
         <p className="no-users">No users found.</p>
       )}
-      {users.length > 0 && (
+      {filteredUsers.length > 0 && (
         <div className="table-container">
           <table>
             <thead>
@@ -85,7 +107,7 @@ const UserManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {filteredUsers.map((user) => (
                 <tr key={user.id} className="user-row">
                   <td>{user.id}</td>
                   <td>{user.full_name}</td>

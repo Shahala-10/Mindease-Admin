@@ -32,51 +32,161 @@ const ChatMonitoring = () => {
     fetchChats();
   }, [userId, navigate]);
 
+  // Shared styles
+  const containerStyle = {
+    padding: '40px 20px',
+    maxWidth: '1100px',
+    margin: '0 auto',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    backgroundColor: '#fff',
+    boxShadow: '0 8px 25px rgba(0,0,0,0.1)',
+    borderRadius: '12px',
+  };
+
+  const headerStyle = {
+    textAlign: 'center',
+    marginBottom: '30px',
+    color: '#222',
+    fontWeight: '700',
+    fontSize: '2rem',
+    letterSpacing: '1px',
+    textTransform: 'uppercase',
+  };
+
+  const messageStyle = {
+    textAlign: 'center',
+    fontSize: '18px',
+    fontWeight: '600',
+    marginBottom: '20px',
+  };
+
+  const loadingStyle = {
+    ...messageStyle,
+    color: '#007bff',
+  };
+
+  const errorStyle = {
+    ...messageStyle,
+    color: '#dc3545',
+    backgroundColor: '#f8d7da',
+    padding: '12px 20px',
+    borderRadius: '8px',
+    border: '1px solid #f5c6cb',
+    boxShadow: '0 2px 10px rgba(220, 53, 69, 0.1)',
+  };
+
+  const noChatsStyle = {
+    ...messageStyle,
+    color: '#666',
+    fontStyle: 'italic',
+  };
+
+  const tableContainerStyle = {
+    overflowX: 'auto',
+    borderRadius: '12px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+    marginBottom: '30px',
+  };
+
+  const tableStyle = {
+    width: '100%',
+    borderCollapse: 'separate',
+    borderSpacing: 0,
+    fontSize: '16px',
+    color: '#444',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    boxShadow: 'inset 0 0 0 1px #ddd',
+  };
+
+  const theadStyle = {
+    background: 'linear-gradient(90deg, #007bff, #0056b3)',
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: '17px',
+  };
+
+  const thTdStyle = {
+    padding: '14px 20px',
+    textAlign: 'left',
+    verticalAlign: 'middle',
+    borderBottom: '1px solid #eee',
+  };
+
+  const trHoverStyle = {
+    backgroundColor: '#f1f9ff',
+    cursor: 'default',
+  };
+
+  const backButtonContainerStyle = {
+    textAlign: 'center',
+    marginTop: '20px',
+  };
+
+  const backButtonStyle = {
+    padding: '12px 30px',
+    background: 'linear-gradient(135deg, #007bff, #0056b3)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '30px',
+    fontSize: '18px',
+    fontWeight: '700',
+    cursor: 'pointer',
+    boxShadow: '0 6px 16px rgba(0, 123, 255, 0.5)',
+    transition: 'background 0.3s ease, box-shadow 0.3s ease',
+  };
+
   return (
-    <div style={{ padding: '30px', maxWidth: '1200px', margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '20px', color: '#333' }}>
-        Chat History for User {userId}
-      </h2>
-      {loading && <p style={{ textAlign: 'center', color: '#007bff' }}>Loading chats...</p>}
-      {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '15px' }}>{error}</p>}
+    <div style={containerStyle}>
+      <h2 style={headerStyle}>Chat History for User {userId}</h2>
+
+      {loading && <p style={loadingStyle}>Loading chats...</p>}
+
+      {error && <p style={errorStyle}>{error}</p>}
+
       {!loading && chats.length === 0 && !error && (
-        <p style={{ textAlign: 'center', color: '#555' }}>No chats found for this user.</p>
+        <p style={noChatsStyle}>No chats found for this user.</p>
       )}
+
       {chats.length > 0 && (
-        <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#f2f2f2' }}>
-              <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Chat ID</th>
-              <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Session ID</th>
-              <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>User Message</th>
-              <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Bot Response</th>
-              <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left' }}>Timestamp</th>
-            </tr>
-          </thead>
-          <tbody>
-            {chats.map((chat) => (
-              <tr key={chat.chat_id} style={{ border: '1px solid #ddd' }}>
-                <td style={{ border: '1px solid #ddd', padding: '12px' }}>{chat.chat_id}</td>
-                <td style={{ border: '1px solid #ddd', padding: '12px' }}>{chat.session_id}</td>
-                <td style={{ border: '1px solid #ddd', padding: '12px' }}>{chat.message}</td>
-                <td style={{ border: '1px solid #ddd', padding: '12px' }}>{chat.response}</td>
-                <td style={{ border: '1px solid #ddd', padding: '12px' }}>{chat.timestamp}</td>
+        <div style={tableContainerStyle}>
+          <table style={tableStyle}>
+            <thead>
+              <tr style={theadStyle}>
+                <th style={thTdStyle}>Chat ID</th>
+                <th style={thTdStyle}>Session ID</th>
+                <th style={thTdStyle}>User Message</th>
+                <th style={thTdStyle}>Bot Response</th>
+                <th style={thTdStyle}>Timestamp</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {chats.map((chat) => (
+                <tr key={chat.chat_id} style={{ ...trHoverStyle }}>
+                  <td style={thTdStyle}>{chat.chat_id}</td>
+                  <td style={thTdStyle}>{chat.session_id}</td>
+                  <td style={thTdStyle}>{chat.message}</td>
+                  <td style={thTdStyle}>{chat.response}</td>
+                  <td style={thTdStyle}>{new Date(chat.timestamp).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+
+      <div style={backButtonContainerStyle}>
         <button
           onClick={() => navigate('/admin/users')}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
+          style={backButtonStyle}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.background =
+              'linear-gradient(135deg, #0056b3, #003d7a)')
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.background =
+              'linear-gradient(135deg, #007bff, #0056b3)')
+          }
         >
           Back to Users
         </button>

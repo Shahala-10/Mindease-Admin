@@ -11,12 +11,15 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/users" element={<UserManagement />} />
-        <Route path="/admin/users/add" element={<AddUser />} /> {/* New route */}
-        <Route path="/admin/chats/:userId" element={<ChatMonitoring />} />
-        <Route path="/admin/analytics/:userId" element={<Analytics />} />
+
+  <Route path="/" element={<AdminLogin />} /> {/* optional default route */}
+  <Route path="/admin/login" element={<AdminLogin />} />
+  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+  <Route path="/admin/users" element={<UserManagement />} />
+  <Route path="/admin/users/add" element={<AddUser />} />
+  <Route path="/admin/chats/:userId" element={<ChatMonitoring />} />
+  <Route path="/admin/analytics/:userId" element={<Analytics />} />
+
       </Routes>
     </Router>
   );
