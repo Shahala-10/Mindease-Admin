@@ -121,13 +121,7 @@ const UserManagement = () => {
                     >
                       View Chats
                     </button>
-                    <button
-                      onClick={() => navigate(`/admin/analytics/${user.id}`)}
-                      className="action-btn view-analytics"
-                      aria-label={`View analytics for ${user.full_name}`}
-                    >
-                      View Analytics
-                    </button>
+              
                     <button
                       onClick={() => handleDeleteUser(user.id)}
                       className="action-btn delete-user"

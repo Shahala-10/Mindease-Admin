@@ -18,6 +18,8 @@ const AdminLogin = () => {
       const response = await axios.post('http://localhost:5000/admin/login', {
         email,
         password,
+      }, {
+        headers: { 'Content-Type': 'application/json' }
       });
       const { access_token } = response.data.data;
       localStorage.setItem('adminToken', access_token);
@@ -32,31 +34,32 @@ const AdminLogin = () => {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h2>MindEase Admin Login</h2>
+        <h2>MindEase Admin</h2>
+        <h3>LOGIN</h3>
         <form onSubmit={handleLogin} className="login-form">
           <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder=" "
+              placeholder="Enter your email"
               aria-label="Email"
             />
-            <label htmlFor="email">Email</label>
           </div>
           <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder=" "
+              placeholder="Enter your password"
               aria-label="Password"
             />
-            <label htmlFor="password">Password</label>
           </div>
           {error && <p className="error-message">{error}</p>}
           <button type="submit" disabled={loading}>
