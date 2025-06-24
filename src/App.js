@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AdminLogin from './AdminLogin';
-import AdminDashboard from './AdminDashboard';
+
 import UserManagement from './UserManagement';
 import ChatMonitoring from './ChatMonitoring';
-import Analytics from './Analytics';
-import AddUser from './AddUser'; // Import the new component
 
+import AddUser from './AddUser'; // Import the new component
+import EmergencyAlertManagement from './EmergencyAlertManagement';
 function App() {
   return (
     <Router>
@@ -14,11 +14,12 @@ function App() {
 
   <Route path="/" element={<AdminLogin />} /> {/* optional default route */}
   <Route path="/admin/login" element={<AdminLogin />} />
-  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
   <Route path="/admin/users" element={<UserManagement />} />
   <Route path="/admin/users/add" element={<AddUser />} />
   <Route path="/admin/chats/:userId" element={<ChatMonitoring />} />
-  <Route path="/admin/analytics/:userId" element={<Analytics />} />
+  
+  <Route path="/admin/alerts" element={<EmergencyAlertManagement />} />
 
       </Routes>
     </Router>
